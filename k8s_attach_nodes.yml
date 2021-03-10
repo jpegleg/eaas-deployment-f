@@ -1,0 +1,51 @@
+---
+
+- hosts: k8sadds
+  remote_user: root
+  vars_files:
+    - /var/lib/jenkins/adds.yml
+
+  tasks:
+
+    - name: aptitude update
+      shell: aptitude update -y && aptitude upgrade && aptitude install apt-transport-https curl gnupg2 -y
+      tags: setup
+
+    - name: install docker.io
+      shell: aptitude install docker.io -y
+      tags: setup
+
+    - name: dat br_netfilter module k
+      shell: lsmod | grep br_netfilter || modprobe br_netfilter
+      tags: setup
+
+    - name: setup the apt key
+      shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+      tags: setup
+
+    - name: do the repo add add truncate to this
+      shell: echo  "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+      tags: setup
+
+    - name: aptitude update again
+      shell: aptitude update -y
+      tags: setup
+
+    - name: install kubelet kubeadm and kubectl
+      shell: aptitude install kubelet kubeadm kubectl -y
+      tags: setup
+
+    - name: swapoff as required for k8s
+      shell: swapoff -a
+      tags: setup
+
+    - name: sysctl -p for port forwarding
+      shell: sysctl -p
+      tags: setup
+
+    - name: join primary
+      shell: kubeadm join {{ control-plane-server }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ ca-cert-hash }}
+      tags: join
+
+
+...
