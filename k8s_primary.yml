@@ -48,6 +48,7 @@
       tags: init
 
     - name: copy config
-      shell: cp /etc/kubernetes/admin.conf ~/ && chown root:root ~/admin.conf && export KUBECONFIG=/root/admin.conf
+      shell: cp /etc/kubernetes/admin.conf /root/ && chown root:root /root/admin.conf
       tags: export
+
 ...
