@@ -44,7 +44,7 @@
       tags: setup
 
     - name: join primary
-      shell: kubeadm join {{ control-plane-server }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ ca-cert-hash }}
+      shell: kubeadm join {{ controlPlanesServer }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ caCertHash }}
       tags: join
 
 
