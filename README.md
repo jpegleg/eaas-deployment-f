@@ -16,5 +16,8 @@ with a calico network, and a template for deploying microservices
 within it.
 
 See more examples of these templates, both of these others include TLS:
+
 https://github.com/jpegleg/eaas-deployment-e
+
 https://github.com/jpegleg/eaas-deployment-d
+
