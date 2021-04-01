@@ -8,7 +8,7 @@
   tasks:
 
     - name: aptitude update
-      shell: aptitude update -y && aptitude upgrade && aptitude install apt-transport-https curl gnupg2 -y
+      shell: aptitude update -y && aptitude upgrade -y && aptitude install apt-transport-https curl gnupg2 -y
       tags: setup
 
     - name: install docker.io
