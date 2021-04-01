@@ -47,13 +47,13 @@
       shell: kubeadm join {{ controlPlanesServer }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ caCertHash }}
       tags: join
 
-    - name: copy over 20-allow-swap.conf
-      copy:
-        src: ./20-allow-swap.conf
-        dest: /etc/systemd/system/kubelet.service.d/20-allow-swap.conf
-        mode: 0644
-        owner: root
-      tags: swapconf
+#    - name: copy over 20-allow-swap.conf
+#      copy:
+#        src: ./20-allow-swap.conf
+#        dest: /etc/systemd/system/kubelet.service.d/20-allow-swap.conf
+#        mode: 0644
+#        owner: root
+#      tags: swapconf
         
     - name: daemon reload
       shell: systemctl daemon-reload && systemctl restart kubelet.service
