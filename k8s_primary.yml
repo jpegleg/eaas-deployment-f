@@ -60,6 +60,6 @@
       tags: swapconf
         
     - name: daemon reload
-      shell: systemctl daemon=-reload && systemctl restart kubelet.service
+      shell: systemctl daemon-reload && systemctl restart kubelet.service
       tags: daemon-reload
 ...
