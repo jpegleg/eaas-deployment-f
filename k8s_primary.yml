@@ -51,4 +51,15 @@
       shell: cp /etc/kubernetes/admin.conf /root/ && chown root:root /root/admin.conf
       tags: export
 
+    - name: copy over 20-allow-swap.conf
+      copy:
+        src: ./20-allow-swap.conf
+        dest: /etc/systemd/system/kubelet.service.d/20-allow-swap.conf
+        mode: 0644
+        owner: root
+      tags: swapconf
+        
+    - name: daemon reload
+      shell: systemctl daemon=-reload && systemctl restart kubelet.service
+      tags: daemon-reload
 ...
