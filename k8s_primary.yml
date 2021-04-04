@@ -37,7 +37,7 @@
       tags: setup
 
     - name: swapoff as required for k8s
-      shell: swapoff -a
+      shell: swapoff -a && grep -v swap /etc/fstab > /var/tmp/.fstab_tmp && mv /var/tmp/.fstab_tmp /etc/fstab
       tags: setup
 
     - name: sysctl -p for port forwarding
@@ -51,16 +51,9 @@
     - name: copy config
       shell: cp /etc/kubernetes/admin.conf /root/ && chown root:root /root/admin.conf
       tags: export
-
-#    - name: copy over 20-allow-swap.conf
-#      copy:
-#        src: ./20-allow-swap.conf
-#        dest: /etc/systemd/system/kubelet.service.d/20-allow-swap.conf
-#        mode: 0644
-#        owner: root
-#      tags: swapconf
         
     - name: daemon reload
       shell: systemctl daemon-reload && systemctl restart kubelet.service
       tags: daemon-reload
+
 ...
