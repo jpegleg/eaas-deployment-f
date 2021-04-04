@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+cd /var/lib/jenkins || exit 1
+which ansible-playbook || exit 1
+echo "Starting up a new k8s cluster..."
+primaryServer=$(grep -A1 k8sinit /var/lib/jenkins/hosts.inventory | tail -n1)
+ansible-playbook -u root -i hosts.inventory k8s_primary.yml
+scp root@"$primaryServer":/var/tmp/k8s.init .
+token="$(grep -o "token.*\\\\" k8s.init | sed 's/token /token: /g' | rev | cut -                                                                                                                                                             c2- | rev)"
+echo "${token[*]}"
+primaryHost="$(grep -A1 k8sinit hosts.inventory | tail -n1 | xargs ping -c1 | he                                                                                                                                                             ad -n1 | awk '{print $3}' | tr -d ')' | tr -d '(')"
+echo "${primaryHost[*]}"
+caCertHash="$(tail -n1 k8s.init | rev | cut -d' ' -f2 | rev)"
+echo "${caCertHash[*]}"
+echo
+echo "Creating the /var/lib/jenkins/adds.yml vars file using the gathered data..                                                                                                                                                             ."
+echo
+echo "---" > /var/lib/jenkins/adds.yml
+echo "controlplaneserver: ${primaryHost[*]}" >> /var/lib/jenkins/adds.yml
+echo "${token[*]}" >> /var/lib/jenkins/adds.yml
+echo "cacerthash: ${caCertHash[*]}" >> /var/lib/jenkins/adds.yml
+echo "..." >> /var/lib/jenkins/adds.yml
+echo
+echo "The /var/lib/jenkins/adds.yml looks like this:"
+echo
+cat /var/lib/jenkins/adds.yml
+echo
+echo "Adding additional nodes now..."
+echo
+ansible-playbook -u root -i hosts.inventory k8s_attach_nodes.yml
+echo
+echo
+#ansible-playbook -u root -i hosts.inventory k8s_config_1.yml
+echo
+echo "Now going to install calico network..."
+echo
+ansible-playbook -u root -i hosts.inventory calico_network.yml
+echo
+echo "Phase 1 k8s cluster playbooks complete."
