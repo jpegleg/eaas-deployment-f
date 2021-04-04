@@ -22,6 +22,7 @@
     - name: setup the apt key
       shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
       tags: setup
+      command_warning: False
 
     - name: do the repo add add truncate to this
       shell: echo  "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
@@ -36,7 +37,7 @@
       tags: setup
 
     - name: swapoff as required for k8s
-      shell: swapoff -a
+      shell: swapoff -a && grep -v swap /etc/fstab > /var/tmp/.fstab_tmp && mv /var/tmp/.fstab_tmp /etc/fstab
       tags: setup
 
     - name: sysctl -p for port forwarding
@@ -46,14 +47,6 @@
     - name: join primary
       shell: kubeadm join {{ controlPlanesServer }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ caCertHash }}
       tags: join
-
-#    - name: copy over 20-allow-swap.conf
-#      copy:
-#        src: ./20-allow-swap.conf
-#        dest: /etc/systemd/system/kubelet.service.d/20-allow-swap.conf
-#        mode: 0644
-#        owner: root
-#      tags: swapconf
         
     - name: daemon reload
       shell: systemctl daemon-reload && systemctl restart kubelet.service
