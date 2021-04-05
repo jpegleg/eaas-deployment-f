@@ -41,9 +41,6 @@ echo "Adding additional nodes now..."
 echo
 ansible-playbook -u root -i hosts.inventory k8s_attach_nodes.yml
 echo
-echo
-#ansible-playbook -u root -i hosts.inventory k8s_config_1.yml
-echo
 echo "Now going to install calico network..."
 echo
 ansible-playbook -u root -i hosts.inventory calico_network.yml
