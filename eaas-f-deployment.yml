@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eaas-f
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eaas-f
+  template:
+    metadata:
+      labels:
+        app: eaas-f
+    spec:
+      containers:
+      - name: eaas
+        image: zcrab/zcrab:eaas
+        ports:
+        - name: eaas-f-zcrab
+          containerPort: 9642
