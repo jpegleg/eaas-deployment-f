@@ -5,8 +5,8 @@ An api template, add new nodes to kubernetes cluster automation with ansible for
 
 I have many of these variations, f is the next one I'm doing on github.
 EaaS deployment f features a single Apache webserver
-with mpm-prefork web cgi program exectuion. There are a few demo
-programs included, you would replace those with your actual API.
+with mpm-prefork web cgi program exectuion. There is a demo
+encryption-as-a-service included, you would replace those with your actual API etc.
 
 
 More of what this repo is about is the installation of a 3 node kubernetes cluster
