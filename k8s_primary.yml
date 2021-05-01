@@ -22,7 +22,6 @@
     - name: setup the apt key
       shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
       tags: setup
-      command_warning: False
 
     - name: do the repo add add truncate to this
       shell: echo  "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
@@ -37,7 +36,7 @@
       tags: setup
 
     - name: swapoff as required for k8s
-      shell: swapoff -a && grep -v swap /etc/fstab > /var/tmp/.fstab_tmp && mv /var/tmp/.fstab_tmp /etc/fstab
+      shell: swapoff -a
       tags: setup
 
     - name: sysctl -p for port forwarding
@@ -49,11 +48,20 @@
       tags: init
 
     - name: copy config
-      shell: cp /etc/kubernetes/admin.conf /root/ && chown root:root /root/admin.conf
+      shell: cp /etc/kubernetes/admin.conf ~/ && chown root:root ~/admin.conf && export KUBECONFIG=/root/admin.conf
       tags: export
-        
-    - name: daemon reload
-      shell: systemctl daemon-reload && systemctl restart kubelet.service
-      tags: daemon-reload
+
+    - name: create the .kube directory ~/.kube
+      shell: mkdir ~/.kube && cp /etc/kubernetes/admin.conf ~/.kube/ && cd ~/.kube/ && mv admin.conf config
+      tags:
+       - setup
+       - kubedir
+
+    - name: restart
+      shell: systemctl restart kubelet
+      tags:
+       - setup
+       - kubedir
+
 
 ...
