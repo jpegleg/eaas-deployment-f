@@ -1,4 +1,4 @@
-![net-gargoyle2](https://carefuldata.com/images/cdlogo.png)
+![eas-template-f](https://carefuldata.com/images/cdlogo.png)
 
 # eaas-deployment-f
 An api template, add new nodes to kubernetes cluster automation with ansible for Debian-based systems (Ubuntu, Debian, Mint, Kali, etc)
