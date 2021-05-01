@@ -1,14 +1,24 @@
 #!/usr/bin/env bash
 echo "Content-Type: text/html";
 
-[ -z "${GPXENV+x}" ] && export GPXENV="$2" || echo "ZCRAB >>> Found and set already, not using any new args for passphrase."
+#[ -z "${GPXENV+x}" ] && export GPXENV="$2" || echo "ZCRAB >>> Found and set already, not using any new args for passphrase."
+
+#encryptor () {
+#  while read line; do
+#    echo "$(date +%Y%m%d%H%M%S)"
+#   echo "EaaS ZCRAB template"
+#    echo $line | sha256sum | cut -d' ' -f1
+#    echo $line | gpg --symmetric  --cipher=aes256 --always-trust --batch --armor --passphrase "$GPXENV" --yes --homedir=/root/
+#  done<&0
+#}
+
 
 encryptor () {
   while read line; do
     echo "$(date +%Y%m%d%H%M%S)"
     echo "EaaS ZCRAB template"
     echo $line | sha256sum | cut -d' ' -f1
-    echo $line | gpg --symmetric  --cipher=aes256 --always-trust --batch --armor --passphrase $GPXENV --yes --homedir=/root/
+    echo $line | gpg --symmetric  --cipher=aes256 --always-trust --batch --armor --passphrase zcrabTmlt0 --yes --homedir=/root/
   done<&0
 }
 
