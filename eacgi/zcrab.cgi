@@ -14,7 +14,7 @@ listener () {
 }
 
 errout () {
-  echo "zcrabctf EXIT ERROR $?"
+  echo "ZCRAB EaaS EXIT ERROR $?"
   exit 1
 }
 echo
