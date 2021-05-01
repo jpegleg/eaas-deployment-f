@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 echo "Content-Type: text/html";
+
+[ -z "${GPXENV+x}" ] && export GPXENV="$2" || echo "ZCRAB >>> Found and set already, not using any new args for passphrase."
+
 encryptor () {
   while read line; do
     echo "$(date +%Y%m%d%H%M%S)"
