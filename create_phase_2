@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+buildOnPrimary () {
+  PHOST=$(cat /var/lib/jenkins/adds.yml | grep control | cut -d':' -f2 | sed 's/ //g')
+  ls keycert.pem || echo "Create a .PEM x509 certificate with its private key appended to the x509 in a single file called keycert.pem in $PWD"
+  cp keycert.pem eacgi/
+  tar czvf eacgi.tgz eacgi
+  scp eacgi.tgz root@"$PHOST":/var/tmp/
+  ssh root@"$PHOST" "cd /var/tmp && mkdir eacgi 2>/dev/null; cp eacgi.tgz eacgi; cd eacgi; docker build -t "zcrab/zcrab:eaas" . ; exit"
+}
+
+# WIP
+ 
