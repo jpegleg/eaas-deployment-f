@@ -5,12 +5,12 @@ echo "Starting up a new k8s cluster..."
 sleep 1
 echo "---------------------------------"
 echo
-echo "You are about to be dropped into a vim session to edit /var/lib/jenkins/ho                                                                                                                                                             sts.inventory"
+echo "You are about to be dropped into a vim session to edit /var/lib/jenkins/hosts.inventory"
 echo "This file will be used as the inventory file for this setup."
 echo
 sleep 1
-echo "Once you are done with the vim session, after it reflects the IPs or hostn                                                                                                                                                             ames you want, quit out :wq"
-echo "And then this script will resume by createing the k8s cluster automaticall                                                                                                                                                             y."
+echo "Once you are done with the vim session, after it reflects the IPs or hostnames you want, quit out :wq"
+echo "And then this script will resume by createing the k8s cluster automatically."
 echo
 echo "Entering vim.."
 echo
@@ -18,14 +18,13 @@ vim /var/lib/jenkins/hosts.inventory
 primaryServer=$(grep -A1 k8sinit /var/lib/jenkins/hosts.inventory | tail -n1)
 ansible-playbook -u root -i hosts.inventory k8s_primary.yml
 scp root@"$primaryServer":/var/tmp/k8s.init .
-token="$(grep -o "token.*\\\\" k8s.init | sed 's/token /token: /g' | cut -d':' -f2 | rev | cut -d' ' -f2- | rev)"                                                                                                                                                        c2- | rev)"
+token="$(grep -o "token.*\\\\" k8s.init | sed 's/token /token: /g' | cut -d':' -f2 | rev | cut -c2- | rev)"
 echo "${token[*]}"
-primaryHost="$(grep -A1 k8sinit hosts.inventory | tail -n1 | xargs ping -c1 |  head -n1 | cut -d' ' -f2)"                                                                                                                                                            ad -n1 | awk '{print $3}' | tr -d ')' | tr -d '(')"
-echo "${primaryHost[*]}"
+primaryHost="$(grep -A1 k8sinit hosts.inventory | tail -n1 | xargs ping -c1 |  head -n1 | cut -d' ' -f2)"
 caCertHash="$(tail -n1 k8s.init | rev | cut -d' ' -f2 | rev)"
 echo "${caCertHash[*]}"
 echo
-echo "Creating the /var/lib/jenkins/adds.yml vars file using the gathered data..                                                                                                                                                             ."
+echo "Creating the /var/lib/jenkins/adds.yml vars file using the gathered data..."
 echo
 echo "---" > /var/lib/jenkins/adds.yml
 echo "controlplaneserver: ${primaryHost[*]}" >> /var/lib/jenkins/adds.yml
