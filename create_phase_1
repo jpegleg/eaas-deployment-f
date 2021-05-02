@@ -18,9 +18,9 @@ vim /var/lib/jenkins/hosts.inventory
 primaryServer=$(grep -A1 k8sinit /var/lib/jenkins/hosts.inventory | tail -n1)
 ansible-playbook -u root -i hosts.inventory k8s_primary.yml
 scp root@"$primaryServer":/var/tmp/k8s.init .
-token="$(grep -o "token.*\\\\" k8s.init | sed 's/token /token: /g' | rev | cut -                                                                                                                                                             c2- | rev)"
+token="$(grep -o "token.*\\\\" k8s.init | sed 's/token /token: /g' | cut -d':' -f2 | rev | cut -d' ' -f2- | rev)"                                                                                                                                                        c2- | rev)"
 echo "${token[*]}"
-primaryHost="$(grep -A1 k8sinit hosts.inventory | tail -n1 | xargs ping -c1 | he                                                                                                                                                             ad -n1 | awk '{print $3}' | tr -d ')' | tr -d '(')"
+primaryHost="$(grep -A1 k8sinit hosts.inventory | tail -n1 | xargs ping -c1 |  head -n1 | cut -d' ' -f2)"                                                                                                                                                            ad -n1 | awk '{print $3}' | tr -d ')' | tr -d '(')"
 echo "${primaryHost[*]}"
 caCertHash="$(tail -n1 k8s.init | rev | cut -d' ' -f2 | rev)"
 echo "${caCertHash[*]}"
