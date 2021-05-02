@@ -1,4 +1,4 @@
-![eas-template-f](https://carefuldata.com/images/cdlogo.png)
+![eaas-template-f](https://carefuldata.com/images/cdlogo.png)
 
 https://github.com/jpegleg/eaas-deployment-f 🟨 status: usable [ work in progress, reference template ]
 
