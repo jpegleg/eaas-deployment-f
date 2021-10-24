@@ -19,11 +19,6 @@
       shell: lsmod | grep br_netfilter || modprobe br_netfilter
       tags: setup
 
-    - name: setup the apt key
-      shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-      tags: setup
-      command_warning: False
-
     - name: do the repo add add truncate to this
       shell: echo  "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
       tags: setup
