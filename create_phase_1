@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cp ./* /var/lib/jenkins/
 cd /var/lib/jenkins || exit 1
 which ansible-playbook || exit 1
 echo "Starting up a new k8s cluster..."
