@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-
+chmod +x /var/www/html/zcrab.cgi
+/var/www/html/zcrab.cgi init
 haproxy -f /etc/haproxy/haproxy.cfg &
 apachectl -D FOREGROUND
