@@ -6,7 +6,7 @@ buildOnPrimary () {
   cp keycert.pem eacgi/
   tar czvf eacgi.tgz eacgi
   scp eacgi.tgz root@"$PHOST":/var/tmp/
-  ssh root@"$PHOST" "cd /var/tmp && mkdir eacgi 2>/dev/null; cp eacgi.tgz eacgi; cd eacgi; docker build -t "zcrab/zcrab:eaas" . ; exit"
+  ssh root@"$PHOST" "cd /var/tmp && mkdir eacgi 2>/dev/null; cp eacgi.tgz eacgi; cd eacgi; chmod +x zcrab.cgi; chmod +x ZCRAB; docker build -t "zcrab/zcrab:eaas" . && docker push "zcrab/zcrab:eaas"; exit"
 }
 
 # WIP
