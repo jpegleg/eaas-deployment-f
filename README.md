@@ -19,8 +19,7 @@ See more examples of these templates:
 
 https://github.com/jpegleg/eaas-deployment-e  # status: 🟩 usable [ docker only template, reference template ]
 
-https://github.com/jpegleg/eaas-deployment-d   # status: 🟧 broken [ abandoned, reference template ]
-
+https://github.com/jpegleg/eaas-deployment-d   # status: 🟩 usable [ microk8s single node, reference template ]
 
 # included shell scripts
 
