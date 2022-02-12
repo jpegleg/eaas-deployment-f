@@ -48,11 +48,11 @@
       tags: init
 
     - name: copy config
-      shell: cp /etc/kubernetes/admin.conf ~/ && chown root:root ~/admin.conf && export KUBECONFIG=/root/admin.conf
+      shell: cp /etc/kubernetes/admin.conf ~/ && chown root:root ~/admin.conf_initial
       tags: export
 
     - name: create the .kube directory ~/.kube
-      shell: mkdir ~/.kube && cp /etc/kubernetes/admin.conf ~/.kube/ && cd ~/.kube/ && mv admin.conf config
+      shell: mkdir ~/.kube && cp /etc/kubernetes/admin.conf ~/.kube/config
       tags:
        - setup
        - kubedir
