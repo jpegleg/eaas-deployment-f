@@ -15,6 +15,7 @@ spec:
       containers:
       - name: eaas
         image: zcrab/zcrab:eaas
+        imagePullPolicy: 'Never'
         ports:
         - name: eaas-f-zcrab
           containerPort: 9642
