@@ -21,9 +21,11 @@ https://github.com/jpegleg/eaas-deployment-e  # status: 🟩 usable [ docker onl
 
 https://github.com/jpegleg/eaas-deployment-d   # status: 🟩 usable [ microk8s single node, reference template ]
 
+https://github.com/jpegleg/eaas-deployment-k  # status: 🟩 usable [ generic k8s config templates ]
+
 And related resource templates:
 
-https://github.com/jpegleg/eaas-deployment-h # status: 🟩 usable [ security reference templates ]
+https://github.com/jpegleg/eaas-deployment-h  # status: 🟩 usable [ security reference templates ]
 
 # included shell scripts
 
